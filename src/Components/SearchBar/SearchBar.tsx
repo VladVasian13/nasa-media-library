@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiltersContainer, FiltersInput, InputContainer, SearchButton, SearchContainer, SearchInput } from "./SearchBar.style";
 
 interface SearchBarProps {
@@ -15,35 +15,67 @@ const SearchBar = (props: SearchBarProps) => {
 
     const { searchText, setSearchText, onSearch, setYearStart, setYearEnd, yearStart, yearEnd } = props;
 
+    const [validateYearStart, setValidateYearStart] = useState<boolean>(false)
+    const [validateYearEnd, setValidateYearEnd] = useState<boolean>(false)
+
+    const validateInput = () => {
+        if (yearStart.length === 4 || yearStart.length === 0) {
+            setValidateYearStart(false)
+        } else {
+            setValidateYearStart(true)
+        }
+        if (yearEnd.length === 4 || yearEnd.length === 0) {
+            setValidateYearEnd(false)
+        } else {
+            setValidateYearEnd(true)
+        }
+
+        if ((yearStart.length === 4 || yearStart.length === 0) && (yearEnd.length === 4 || yearEnd.length === 0))
+            return true
+
+        return false
+    }
+
+    const onSubmit = () => {
+        const proceedFetch = validateInput()
+        if (proceedFetch)
+            onSearch(searchText)
+    }
+
     return (
         <SearchContainer>
             <InputContainer>
                 <SearchInput
                     label="Search in the NASA Database"
                     variant="outlined"
-                    onChange={(e: any) => setSearchText(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
                     value={searchText}
                 />
                 <SearchButton
                     variant="contained"
-                    onClick={() => onSearch(searchText)}
+                    onClick={onSubmit}
                 >
                     Search
                 </SearchButton>
             </InputContainer>
             <FiltersContainer>
-                Year Filters
                 <FiltersInput
                     label="Year Start"
                     variant="outlined"
                     onChange={(e) => setYearStart(e.target.value)}
                     value={yearStart}
+                    type="number"
+                    error={validateYearStart}
+                    size="small"
                 />
                 <FiltersInput
                     label="Year End"
                     variant="outlined"
                     onChange={(e) => setYearEnd(e.target.value)}
                     value={yearEnd}
+                    type="number"
+                    error={validateYearEnd}
+                    size="small"
                 />
             </FiltersContainer>
         </SearchContainer>

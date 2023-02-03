@@ -36,6 +36,6 @@ export const FiltersContainer = styled(Box)({
 })
 
 export const FiltersInput = styled(TextField)({
-    width: "100px",
-    height: "50px"
+    width: "150px",
+    fontSize: "10px"
 })
