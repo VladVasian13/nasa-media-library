@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { CollectionCard, CollectionListContainer } from "./CollectionList.style";
+import { CollectionListContainer } from "./CollectionList.style";
 import { ICollection, ICollectionWithMetadata } from "../../Models/models";
+import CollectionCard from "../CollectionCard/CollectionCard";
+import { CircularProgress } from "@mui/material";
 
 interface CollectionListProps {
     collections: ICollection[];
@@ -10,46 +12,65 @@ const CollectionList = (props: CollectionListProps) => {
 
     const { collections } = props;
     const [collectionsWithMetadata, setCollectionsWithMetadata] = useState<ICollectionWithMetadata[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const getMetadata = (collections: ICollection[]) => {
-        Promise.all(collections.map((el: ICollection) => {
-            return fetch(`https://images-api.nasa.gov/metadata/${el.data[0].nasa_id}`)
-        }))
-            .then(responses => {
-                Promise.all(responses.map(res => res.json()))
-                    .then(res =>
-                        Promise.all(res.map((el) =>
-                            fetch(el.location)
-                        )))
-                    .then(responses =>
-                        Promise.all(responses.map(el => el.json()))
-                            .then((data) => {
-                                const collectionsWithMetadata = collections.map(collection => {
-                                    const metaData = data.filter(el => el["AVAIL:Title"] === collection.data[0].title)
-                                    return { ...collection, metaData }
+        try {
+            setLoading(true)
+            Promise.allSettled(collections.map((el: ICollection) => {
+                return fetch(`https://images-api.nasa.gov/metadata/${el.data[0].nasa_id}`)
+            }))
+                .then(responses => {
+                    Promise.all(responses.map(res => res.status === "fulfilled" && res.value.json()))
+                        .then(res =>
+                            Promise.all(res.map((el) => {
+                                return fetch(el.location)
+                            })))
+                        .then(responses => {
+                            Promise.all(responses.map(el => el.type === 'cors' && el.json()))
+                                .then((data) => {
+                                    const collectionsWithMetadata = collections.map(collection => {
+                                        const metaData = data.filter(el => el["AVAIL:Title"] === collection.data[0].title)
+                                        return { ...collection, metaData }
+                                    })
+                                    setCollectionsWithMetadata(collectionsWithMetadata)
+                                    setLoading(false)
                                 })
-                                setCollectionsWithMetadata(collectionsWithMetadata)
-                            })
-                    )
-            })
+                        }
+                        )
+                })
+        } catch (error) {
+            console.log(error)
+        }
     }
-
 
     useEffect(() => {
         getMetadata(collections)
     }, [collections])
 
-
     return (
         <CollectionListContainer>
-            {collectionsWithMetadata.map((collection: ICollection, idx: number) => {
-                return (
-                    <CollectionCard key={idx}>
-                        {collection.data[0].title}
-                        <img src={collection.links[0].href} alt={collection.data[0].title} />
-                    </CollectionCard>
-                )
-            })}
+            {!loading ?
+                collectionsWithMetadata.length > 0 ?
+                    collectionsWithMetadata.map((collection: ICollectionWithMetadata, idx: number) => {
+                        return (
+                            <CollectionCard
+                                key={idx}
+                                allData={collection}
+                                title={collection.data[0].title}
+                                thumbnail={collection.links[0].href}
+                                location={collection.metaData[0]["AVAIL:Location"]}
+                                photographerName={collection.metaData[0]["AVAIL:Photographer"]}
+                            />
+                        )
+                    })
+                    :
+                    <div>
+                        No results!
+                    </div>
+                :
+                <CircularProgress />
+            }
         </CollectionListContainer>
     )
 }

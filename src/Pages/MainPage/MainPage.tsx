@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MainPageContainer, Title, TitleContainer } from "./MainPage.style";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import CollectionList from "../../Components/CollectionList/CollectionList";
@@ -12,10 +12,19 @@ const MainPage = () => {
     const [collections, setCollections] = useState([])
 
     const fetchData = (searchString: string) => {
-        fetch(`https://images-api.nasa.gov/search?q=${searchString}&media_type=image${yearStart.length > 0 ? `&year_start=${yearStart}` : ""}${yearEnd.length > 0 ? `&year_end=${yearEnd}` : ""}`)
-            .then((res) => res.json())
-            .then((res) => setCollections(res.collection.items))
+        try {
+            fetch(`https://images-api.nasa.gov/search?q=${searchString}&media_type=image${yearStart.length > 0 ? `&year_start=${yearStart}` : ""}${yearEnd.length > 0 ? `&year_end=${yearEnd}` : ""}`)
+                .then((res) => res.json())
+                .then((res) => setCollections(res.collection.items))
+        } catch (error) {
+            console.log(error)
+        }
     }
+
+    useEffect(() => {
+        fetchData("")
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <MainPageContainer>
