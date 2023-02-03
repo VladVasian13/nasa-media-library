@@ -7,10 +7,12 @@ import { NasaLogo } from "../../Assets/svg/NasaLogo";
 const MainPage = () => {
 
     const [searchText, setSearchText] = useState<string>("")
+    const [yearStart, setYearStart] = useState<string>("")
+    const [yearEnd, setYearEnd] = useState<string>("")
     const [collections, setCollections] = useState([])
 
     const fetchData = (searchString: string) => {
-        fetch(`https://images-api.nasa.gov/search?q=${searchString}&media_type=image`)
+        fetch(`https://images-api.nasa.gov/search?q=${searchString}&media_type=image${yearStart.length > 0 ? `&year_start=${yearStart}` : ""}${yearEnd.length > 0 ? `&year_end=${yearEnd}` : ""}`)
             .then((res) => res.json())
             .then((res) => setCollections(res.collection.items))
     }
@@ -27,6 +29,10 @@ const MainPage = () => {
                 searchText={searchText}
                 setSearchText={setSearchText}
                 onSearch={fetchData}
+                setYearStart={setYearStart}
+                setYearEnd={setYearEnd}
+                yearStart={yearStart}
+                yearEnd={yearEnd}
             />
             <CollectionList
                 collections={collections}

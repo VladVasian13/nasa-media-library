@@ -5,6 +5,7 @@ export const SearchContainer = styled(Box)({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "column",
     gap: "35px",
     padding: "22px"
 })
@@ -12,9 +13,29 @@ export const SearchContainer = styled(Box)({
 export const SearchInput = styled(TextField)({
     width: "30%",
     minWidth: "200px",
-    height: "50px"
 })
 
 export const SearchButton = styled(Button)({
+    height: "50px"
+})
+
+export const InputContainer = styled(Box)({
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "35px",
+})
+
+export const FiltersContainer = styled(Box)({
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "35px",
+})
+
+export const FiltersInput = styled(TextField)({
+    width: "100px",
     height: "50px"
 })
