@@ -94,7 +94,7 @@ const Collection = () => {
                                 fontWeight: "600"
                             }}
                         >
-                            {allData.data[0].title}
+                            {allData?.data[0].title}
                         </Box>
                         <Box
                             sx={{
@@ -104,7 +104,7 @@ const Collection = () => {
                             }}
                         >
                             <LocationOnIcon fontSize="small" />
-                            {allData.metaData[0]["AVAIL:Location"].length > 0 ? allData.metaData[0]["AVAIL:Location"] : "No location"}
+                            {allData?.metaData.length > 0 && allData?.metaData[0]["AVAIL:Location"].length > 0 ? allData?.metaData[0]["AVAIL:Location"] : "No location"}
                         </Box>
                         <Box
                             sx={{
@@ -114,7 +114,7 @@ const Collection = () => {
                             }}
                         >
                             <AddAPhotoIcon fontSize="small" />
-                            {allData.metaData[0]["AVAIL:Photographer"].length > 0 ? allData.metaData[0]["AVAIL:Photographer"] : "No photographer name"}
+                            {allData?.metaData.length > 0 && allData?.metaData[0]["AVAIL:Photographer"].length > 0 ? allData?.metaData[0]["AVAIL:Photographer"] : "No photographer name"}
                         </Box>
                         <Box
                             sx={{
@@ -124,7 +124,7 @@ const Collection = () => {
                             }}
                         >
                             <CalendarMonthIcon fontSize="small" />
-                            {allData.data[0].date_created.length > 0 ? format(new Date(allData.data[0].date_created), "PPP") : "Unknown date"}
+                            {allData?.data[0].date_created.length > 0 ? format(new Date(allData?.data[0].date_created), "PPP") : "Unknown date"}
                         </Box>
                         <Box
                             sx={{
