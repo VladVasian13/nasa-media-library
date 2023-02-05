@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
+
+//Styles
 import { CollectionListContainer } from "./CollectionList.style";
-import { ICollection, ICollectionWithMetadata } from "../../Models/models";
+
+//Models
+import {
+    ICollection,
+    ICollectionWithMetadata
+} from "../../Models/models";
+
+//Components
 import CollectionCard from "../CollectionCard/CollectionCard";
 import { CircularProgress } from "@mui/material";
 

@@ -1,19 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+
+//React Router
+import {
+    useLocation,
+    useNavigate
+} from "react-router-dom";
+
+//Icons
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { BackArrowContainer, DetailsCollectionContainer, DetailsContainer, DetailsData, PicturesContainer } from "./Collection.style";
-import { Box, Chip } from "@mui/material";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
+//Styles
+import {
+    BackArrowContainer,
+    DetailsCollectionContainer,
+    DetailsContainer,
+    DetailsData,
+    PicturesContainer
+} from "./Collection.style";
+
+//MUI Components
+import {
+    Box,
+    Chip
+} from "@mui/material";
+
+//Date Format
 import { format } from "date-fns";
+
 
 const Collection = () => {
 
-    const { state } = useLocation();
-    const navigate = useNavigate()
-    const { allData } = state;
     const [allPics, setAllPics] = useState<string[]>([])
+
+    const { state } = useLocation();
+    const { allData } = state;
+
+    const navigate = useNavigate()
 
     const fetchPicCollection = () => {
         fetch(allData.href)
@@ -45,7 +70,9 @@ const Collection = () => {
             <DetailsContainer>
                 <Box
                     sx={{
-                        display: "flex"
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: "22px",
                     }}
                 >
                     <Box
@@ -61,7 +88,6 @@ const Collection = () => {
                     >
                     </Box>
                     <DetailsData>
-
                         <Box
                             sx={{
                                 fontSize: "22px",
@@ -103,13 +129,21 @@ const Collection = () => {
                         <Box
                             sx={{
                                 display: "flex",
+                                flexWrap: "wrap",
                                 gap: "10px",
-                                paddingTop: "10px"
+                                paddingTop: "10px",
+                                width: "100%"
                             }}
                         >
                             {allData.data[0].keywords.map((keyword: string, idx: number) => {
                                 return (
-                                    <Chip label={keyword} variant="outlined" key={idx} />
+                                    <Chip
+                                        label={keyword}
+                                        variant="outlined"
+                                        sx={{
+                                            maxWidth: "300px"
+                                        }}
+                                        key={idx} />
                                 )
                             })}
                         </Box>
@@ -149,8 +183,7 @@ const Collection = () => {
                             <Box
                                 sx={{
                                     backgroundImage: `url(${pic})`,
-                                    width: "100%",
-                                    height: "500px",
+                                    height: "300px",
                                     backgroundSize: "contain",
                                     backgroundRepeat: "no-repeat",
                                     border: 0,

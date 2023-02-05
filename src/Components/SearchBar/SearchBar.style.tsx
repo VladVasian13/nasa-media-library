@@ -16,7 +16,7 @@ export const SearchInput = styled(TextField)({
 })
 
 export const SearchButton = styled(Button)({
-    height: "50px"
+    height: "55px"
 })
 
 export const InputContainer = styled(Box)({
@@ -36,6 +36,5 @@ export const FiltersContainer = styled(Box)({
 })
 
 export const FiltersInput = styled(TextField)({
-    width: "150px",
-    fontSize: "10px"
+    width: "120px",
 })

@@ -1,9 +1,22 @@
 import React from "react"
-import { CardContainer, DetailsContainer } from "./CollectionCard.style";
-import { Box } from "@mui/material";
+
+// Styles
+import {
+    CardContainer,
+    DetailsContainer
+} from "./CollectionCard.style";
+
+//Icons
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+
+//Models
 import { ICollectionWithMetadata } from "../../Models/models";
+
+//MUI Components
+import { Box } from "@mui/material";
+
+//React Router
 import { useNavigate } from "react-router-dom";
 
 interface CollectionCardProps {
@@ -16,7 +29,13 @@ interface CollectionCardProps {
 
 const CollectionCard = (props: CollectionCardProps) => {
 
-    const { title, thumbnail, location, photographerName, allData } = props;
+    const {
+        title,
+        thumbnail,
+        location,
+        photographerName,
+        allData
+    } = props;
 
     const navigate = useNavigate();
 

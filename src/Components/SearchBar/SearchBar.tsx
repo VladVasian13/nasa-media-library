@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { FiltersContainer, FiltersInput, InputContainer, SearchButton, SearchContainer, SearchInput } from "./SearchBar.style";
+
+//Styles
+import {
+    FiltersContainer,
+    FiltersInput,
+    InputContainer,
+    SearchButton,
+    SearchContainer,
+    SearchInput
+} from "./SearchBar.style";
 
 interface SearchBarProps {
     searchText: string,
@@ -46,7 +55,7 @@ const SearchBar = (props: SearchBarProps) => {
         <SearchContainer>
             <InputContainer>
                 <SearchInput
-                    label="Search in the NASA Database"
+                    label="Search in library"
                     variant="outlined"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
                     value={searchText}
@@ -66,6 +75,7 @@ const SearchBar = (props: SearchBarProps) => {
                     value={yearStart}
                     type="number"
                     error={validateYearStart}
+                    helperText={validateYearStart ? "Format: YYYY" : ""}
                     size="small"
                 />
                 <FiltersInput
@@ -75,6 +85,7 @@ const SearchBar = (props: SearchBarProps) => {
                     value={yearEnd}
                     type="number"
                     error={validateYearEnd}
+                    helperText={validateYearEnd ? "Format: YYYY" : ""}
                     size="small"
                 />
             </FiltersContainer>

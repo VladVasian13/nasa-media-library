@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { MainPageContainer, Title, TitleContainer } from "./MainPage.style";
+
+//Styles
+import {
+    MainPageContainer,
+    Title,
+    TitleContainer
+} from "./MainPage.style";
+
+//Components
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import CollectionList from "../../Components/CollectionList/CollectionList";
+
+//SVGs
 import { NasaLogo } from "../../Assets/svg/NasaLogo";
 
 const MainPage = () => {
@@ -30,7 +40,7 @@ const MainPage = () => {
         <MainPageContainer>
             <TitleContainer>
                 <Title>
-                    Nasa Media Library
+                    Nasa Library
                 </Title>
                 <NasaLogo />
             </TitleContainer>

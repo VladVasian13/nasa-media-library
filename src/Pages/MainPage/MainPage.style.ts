@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+
+//MUI Components
 import { Box } from "@mui/material";
 
 export const MainPageContainer = styled(Box)({
