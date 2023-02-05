@@ -59,8 +59,8 @@ const CollectionList = (props: CollectionListProps) => {
                                 allData={collection}
                                 title={collection.data[0].title}
                                 thumbnail={collection.links[0].href}
-                                location={collection.metaData[0]["AVAIL:Location"]}
-                                photographerName={collection.metaData[0]["AVAIL:Photographer"]}
+                                location={collection.metaData.length > 0 ? collection.metaData[0]["AVAIL:Location"] : ""}
+                                photographerName={collection.metaData.length > 0 ? collection.metaData[0]["AVAIL:Photographer"] : ""}
                             />
                         )
                     })

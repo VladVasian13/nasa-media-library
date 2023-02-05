@@ -41,7 +41,10 @@ const CollectionCard = (props: CollectionCardProps) => {
                 <Box
                     sx={{
                         fontSize: "14px",
-                        fontWeight: "600"
+                        fontWeight: "600",
+                        whiteSpace: title.length > 100 ? "nowrap" : "initial",
+                        overflow: title.length > 100 ? "hidden" : "initial",
+                        textOverflow: "ellipsis",
                     }}
                 >
                     {title}
