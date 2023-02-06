@@ -39,7 +39,7 @@ const CollectionList = (props: CollectionListProps) => {
                 return fetch(`https://images-assets.nasa.gov/image/${el.data[0].nasa_id}/metadata.json`)
             }))
                 .then(responses => {
-                    Promise.all(responses.map(res => res.status === "fulfilled" && res.value.json()))
+                    Promise.all(responses.map(res => res.status === "fulfilled" && res.value.status === 200 && res.value.json()))
                         .then((data) => {
                             const collectionsWithMetadata = collections.map(collection => {
                                 const metaData = data.filter(el => el["AVAIL:Title"] === collection.data[0].title)
